@@ -41,25 +41,21 @@ const BillComponent = () => {
     return formatAsDollers(totalPerPerson);
   };
 
+
   const inputValidationFunction = (
     percent,
     validTotal,
     validNumberOfPeople
   ) => {
-    if (percent < 0 || isNaN(validTotal) || validTotal <= 0) {
+    if (percent < 0 || isNaN(validTotal) || validTotal <= 0 || isNaN(validNumberOfPeople) || validNumberOfPeople <= 0) {
       setIsThereANum(true);
       setIsDisabled(false);
-      return "$0.00";
-    }
-    if (isNaN(validNumberOfPeople) || validNumberOfPeople <= 0) {
-      setIsDisabled(false);
-      setIsThereANum(true);
-      console.log('empty')
       return "$0.00";
     }
     setIsThereANum(false);
     return null;
   };
+  
   const handleCustumePercent = (event) => {
     let input = event.target.value;
     setCustomeTip(input);
@@ -78,12 +74,17 @@ const BillComponent = () => {
     setactiveButton(buttonsId)
   };
   useEffect(() => {
-    if (customeTip != "" && numberOfPeople != "") {
+    if (customeTip && numberOfPeople) {
       setIsDisabled(false);
       displayAmounts(customeTip, billTotal, numberOfPeople);
-    }else if(customeTip != "" || numberOfPeople==''){
-        setactiveButton(null)
-        setactiveButton(null);
+    } else if (customeTip || numberOfPeople === "") {  
+      setactiveButton(null);
+    }
+  
+   
+    if (numberOfPeople !== "") {
+      setIsThereANum(false);
+      setactiveButton(null);
     }
   }, [customeTip, numberOfPeople]);
   return (
