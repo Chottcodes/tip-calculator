@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  background-color:hsl(185, 41%, 84%);
+  font-family: 'Space-Mono Regular';
+  height: 100%;
+  width: 100%;
+}
+@font-face {
+  font-family: Space-Mono Regular;
+  src: url('/assets/fonts/SpaceMono-Regular.ttf');
+  font-weight: 700;
+}
+
+
