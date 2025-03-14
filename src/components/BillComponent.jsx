@@ -4,6 +4,7 @@ import ButtonComponents from "./ButtonComponents";
 const BillComponent = () => {
   const [isThereANum, setIsThereANum] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [activeButton, setactiveButton] = useState(null);
   const [billTotal, setBillTotal] = useState("");
   const [customeTip, setCustomeTip] = useState("");
   const [numberOfPeople, setNumberOfPeople] = useState("");
@@ -18,6 +19,7 @@ const BillComponent = () => {
     setTotalTipAmount("$0.00");
     setIsThereANum(false);
     setIsDisabled(true);
+    setactiveButton(null)
   };
 
   const tipAmount = (percent, total, numberofPeople) => {
@@ -52,6 +54,7 @@ const BillComponent = () => {
     if (isNaN(validNumberOfPeople) || validNumberOfPeople <= 0) {
       setIsDisabled(false);
       setIsThereANum(true);
+      console.log('empty')
       return "$0.00";
     }
     setIsThereANum(false);
@@ -69,14 +72,18 @@ const BillComponent = () => {
     });
     return usDollar.format(toConvert);
   };
-  const displayAmounts = (percent, totalBill, numberofPeople) => {
+  const displayAmounts = (percent, totalBill, numberofPeople,buttonsId) => {
     setTipAmountPerPerson(tipAmount(percent, totalBill, numberofPeople));
     setTotalTipAmount(total(percent, totalBill, numberofPeople));
+    setactiveButton(buttonsId)
   };
   useEffect(() => {
     if (customeTip != "" && numberOfPeople != "") {
       setIsDisabled(false);
       displayAmounts(customeTip, billTotal, numberOfPeople);
+    }else if(customeTip != "" || numberOfPeople==''){
+        setactiveButton(null)
+        setactiveButton(null);
     }
   }, [customeTip, numberOfPeople]);
   return (
@@ -105,30 +112,35 @@ const BillComponent = () => {
           </p>
           <div className=" h-[80%] lg:h-[60%]  gap-4 w-full overflow-hidden grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
             <ButtonComponents
-              clickFunction={() => displayAmounts(5, billTotal, numberOfPeople)}
+              isActive={activeButton === '5%'}
+              clickFunction={() => displayAmounts(5, billTotal, numberOfPeople,'5%')}
               number="5%"
             />
             <ButtonComponents
+              isActive={activeButton === '10%'}
               clickFunction={() =>
-                displayAmounts(10, billTotal, numberOfPeople)
+                displayAmounts(10, billTotal, numberOfPeople,'10%')
               }
               number="10%"
             />
             <ButtonComponents
+            isActive={activeButton === '15%'}
               clickFunction={() =>
-                displayAmounts(15, billTotal, numberOfPeople)
+                displayAmounts(15, billTotal, numberOfPeople,'15%')
               }
               number="15%"
             />
             <ButtonComponents
+            isActive={activeButton === '25%'}
               clickFunction={() =>
-                displayAmounts(25, billTotal, numberOfPeople)
+                displayAmounts(25, billTotal, numberOfPeople,'25%')
               }
               number="25%"
             />
             <ButtonComponents
+            isActive={activeButton === '50%'}
               clickFunction={() =>
-                displayAmounts(50, billTotal, numberOfPeople)
+                displayAmounts(50, billTotal, numberOfPeople,'50%')
               }
               number="50%"
             />
@@ -159,7 +171,9 @@ const BillComponent = () => {
               alt="person Icon"
             />
             <input
-              className={`${isThereANum? 'border-2 border-red-400 ':'border-none'} h-full w-full text-right p-3 text-[24px] bg-[#eefdfe] text-[#00494d] rounded-lg`}
+              className={`${
+                isThereANum ? "border-2 border-red-400 " : "border-none"
+              } h-full w-full text-right p-3 text-[24px] bg-[#eefdfe] text-[#00494d] rounded-lg`}
               type="number"
               placeholder="0"
               value={numberOfPeople}
