@@ -74,7 +74,6 @@ const BillComponent = () => {
     setactiveButton(buttonsId)
   };
   useEffect(() => {
-    //1st if statement is to 
     if (customeTip && numberOfPeople) {
       setIsDisabled(false);
       displayAmounts(customeTip, billTotal, numberOfPeople);
@@ -88,6 +87,7 @@ const BillComponent = () => {
       setactiveButton(null);
     }
   }, [customeTip, numberOfPeople]);
+
   return (
     <div className="w-[90%] h-[75%] lg:h-[95%] transition-all duration-300  lg:w-[95%] lg:flex lg:items-center lg:justify-center lg:gap-5">
       <div className="h-[90%] lg:w-[50%] lg:h-full">
