@@ -62,11 +62,11 @@ const BillComponent = () => {
   };
 
   const formatAsDollers = (toConvert) => {
-    let usDollar = new Intl.NumberFormat("en-US", {
+    let usDoller = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
     });
-    return usDollar.format(toConvert);
+    return usDoller.format(toConvert);
   };
   const displayAmounts = (percent, totalBill, numberofPeople,buttonsId) => {
     setTipAmountPerPerson(tipAmount(percent, totalBill, numberofPeople));
@@ -74,6 +74,7 @@ const BillComponent = () => {
     setactiveButton(buttonsId)
   };
   useEffect(() => {
+    //1st if statement is to 
     if (customeTip && numberOfPeople) {
       setIsDisabled(false);
       displayAmounts(customeTip, billTotal, numberOfPeople);
@@ -88,7 +89,7 @@ const BillComponent = () => {
     }
   }, [customeTip, numberOfPeople]);
   return (
-    <div className="w-[90%] h-[75%] lg:h-[95%] lg:w-[95%] lg:flex lg:items-center lg:justify-center lg:gap-5">
+    <div className="w-[90%] h-[75%] lg:h-[95%] transition-all duration-300  lg:w-[95%] lg:flex lg:items-center lg:justify-center lg:gap-5">
       <div className="h-[90%] lg:w-[50%] lg:h-full">
         <div className="w-full h-[20%] lg:h-[22%] flex flex-col ">
           <p className="pt-5 pb-2 text-2xl lg:text-lg text-[#00494d]">Bill</p>
@@ -184,7 +185,7 @@ const BillComponent = () => {
         </div>
       </div>
 
-      <div className="h-[50%] lg:w-[50%] lg:h-full">
+      <div className="h-[60%] lg:w-[50%] lg:h-full">
         <div className="h-[100%] mt-2 md:mt-0">
           <div className="h-[90%] md:h-[95%] rounded-xl w-full mt-5 bg-[#00494d] flex flex-col items-center lg:justify-center">
             <div className="w-[90%] md:h-[30%] flex mt-4 md:mt-5">
